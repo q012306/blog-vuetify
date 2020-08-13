@@ -134,7 +134,7 @@
         this.axios.get('/api/article/' + this.pageSize + '/' + page).then(resp => {
           if (resp && resp.data.code === 200) {
             this.articles = resp.data.result.content
-            this.total = resp.data.result.totalElements
+            this.total = resp.data.result.totalPages
           }
         })
       },

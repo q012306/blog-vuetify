@@ -5,30 +5,46 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import moment from './utils/moment-with-locales.min.js'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueMarkdownEditor from '@kangc/v-md-editor';
 import '@kangc/v-md-editor/lib/style/base-editor.css';
 import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
 import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
+import createTodoListPlugin from '@kangc/v-md-editor/lib/plugins/todo-list/index';
+import createLineNumbertPlugin from '@kangc/v-md-editor/lib/plugins/line-number/index';
+import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
+import createHighlightLinesPlugin from '@kangc/v-md-editor/lib/plugins/highlight-lines/index';
+import 'prismjs/components/prism-java';
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import 'dayjs/locale/zh-cn'
+
+dayjs.extend(localizedFormat)
+dayjs.extend(relativeTime)
+dayjs.locale('zh-cn');
 
 Vue.use(ElementUI);
 
+VueMarkdownEditor.use(createHighlightLinesPlugin());
+VueMarkdownEditor.use(createCopyCodePlugin());
+VueMarkdownEditor.use(createLineNumbertPlugin());
+VueMarkdownEditor.use(createTodoListPlugin());
 VueMarkdownEditor.use(vuepressTheme);
 VueMarkdownEditor.use(createEmojiPlugin());
 Vue.use(VueMarkdownEditor);
+
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 
 Vue.filter("dateformat", 
 function(dataStr, pattern) {
-  let lang = navigator.language;
-  moment.locale(lang);
+  //var lang = (navigator.language || navigator.browserLanguage).toLowerCase();
   if(pattern){
-    return moment(dataStr).format(pattern);
+    return dayjs(dataStr).format(pattern);
   }else{
-    return moment(dataStr).fromNow();
+    return dayjs(dataStr).fromNow();
   }
 });
 

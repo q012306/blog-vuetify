@@ -51,7 +51,7 @@
       </v-skeleton-loader>
     </v-container>
     <v-pagination
-      @input="handleCurrentChange(page)"
+      @input="handleCurrentChange(page);$vuetify.goTo(0)"
       v-model="page"
       :length="total">
     </v-pagination>

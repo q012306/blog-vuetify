@@ -1,7 +1,7 @@
 <template>
 <div>
   <v-navigation-drawer
-    style="z-index:2;padding: 100px 0 0;position: fixed;"
+    style="z-index:2;padding-top: 120px;position: fixed;"
     absolute
     expand-on-hover
     hide-overlay
@@ -49,7 +49,7 @@
         <div v-for="comment in comments" :key="comment.id">
           <div>
             <v-card-title>{{comment.commentUsername}}</v-card-title>
-            <v-card-subtitle class="pb-0">{{comment.commentDate | dateformat('lll')}} ——评论于 {{article.articleDate | dateformat}}</v-card-subtitle>
+            <v-card-subtitle class="pb-0">{{comment.commentDate | dateformat('lll')}} ——评论于 {{comment.commentDate | dateformat}}</v-card-subtitle>
             <v-card-text style="margin: 10px" class="text--primary">
               {{comment.commentContent}}
             </v-card-text>

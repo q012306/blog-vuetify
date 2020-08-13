@@ -23,9 +23,10 @@
       <v-md-editor
         v-model="article.articleContentMd"
         :disabled-menus="[]"
-        left-toolbar="undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image code | emoji save"
+        left-toolbar="undo redo clear | h bold italic strikethrough quote | ul ol table hr | link image code | todo-list tip emoji save"
         style="height: 100%"
         @upload-image="handleUploadImage"
+        @copy-code-success="handleCopyCodeSuccess"
         @save="saveArticles">
       </v-md-editor>
 
@@ -76,7 +77,7 @@
           this.article.articleDate = new Date();
         }
         if(this.article.articleAbstract == null || this.article.articleAbstract == '')
-          this.article.articleAbstract = html.replace(/<[^>]*>|/g,"").substring(0,250)
+          this.article.articleAbstract = html.replace(/<[^>]*>|/g,"").substring(0,120)
         // value 是 md
         this.$confirm('是否保存并发布文章?', '提示', {
           confirmButtonText: '确定',
@@ -126,7 +127,13 @@
       },
       uploadImg () {
         this.article.articleCover = this.$refs.imgUpload.url
-      }
+      },
+      handleCopyCodeSuccess() {
+        this.$message({
+          message: '复制成功！',
+          type: 'success'
+        });
+      },
     }
   }
 </script>
