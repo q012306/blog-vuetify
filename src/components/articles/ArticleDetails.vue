@@ -27,7 +27,7 @@
         :src="article.articleCover"
         height="200px"
         fit="cover">
-        <v-card-title>{{article.articleTitle}}</v-card-title>
+        <v-card-title style="text-shadow: 2px 2px 2px #888888; font-weight: bold">{{article.articleTitle}}</v-card-title>
       </v-img>
       <v-card-subtitle class="pb-0">{{article.articleDate | dateformat('lll')}} ——发布于 {{article.articleDate | dateformat}}</v-card-subtitle>
       <v-card-text class="text--primary">
@@ -232,6 +232,8 @@
   }
 </script>
 
-<style scoped>
-  
+<style>
+  .v-application code{
+      font-weight: normal;
+  }
 </style>

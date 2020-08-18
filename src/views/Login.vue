@@ -11,14 +11,25 @@
           label="账号">
         </v-text-field>
         <v-text-field
-        clearable
+          clearable
           type="password"
           :rules="inputrules"
           v-model="loginForm.password"
           :counter="20"
           label="密码">
         </v-text-field>
-        <v-btn :disabled="!valid" block color="primary" style="margin-top:30px" v-on:click="login">登录</v-btn>
+
+        <div class="d-flex align-center">
+        <v-text-field
+          :counter="4"
+          :rules="captcharules"
+          v-model="captchaText"
+          clearable
+          label="验证码"
+        ></v-text-field>
+        <img style="margin-left:18px;box-shadow: 3px 3px 3px #888888;" :src="'data:image/jpg;base64,'+captcha" @click="loadCaptcha">
+        </div>
+        <v-btn :disabled="!valid" block color="primary" style="margin-top:10px" v-on:click="login">登录</v-btn>
       </v-form>
   </body>
 </template>
@@ -37,14 +48,26 @@
           v => !!v || '不能为空！',
           v => v.length <= 20 || '必须小于20个字符！',
         ],
+        captcharules: [
+          v => !!v || '不能为空！',
+          v => v.length <= 4 || '必须小于4个字符！',
+        ],
+        captcha: '',
+        captchaToken: '',
+        captchaText: ''
       }
+    },
+    mounted(){
+      this.loadCaptcha()
     },
     methods: {
       login() {
         this.axios
           .post('/api/login', {
             username: this.loginForm.username,
-            password: this.loginForm.password
+            password: this.loginForm.password,
+            captchaText: this.captchaText,
+            captchaToken: this.captchaToken
           })
           .then(successResponse => {
             if (successResponse.data.code === 200) {
@@ -57,12 +80,28 @@
                 path: '/index'
               })
             } else if (successResponse.data.code === 400) {
+              this.loadCaptcha()
               this.$message({
-                message: '用户名密码错误，登陆失败！',
+                message: successResponse.data.message,
                 type: 'warning'
               });
             }
           })
+          .catch(() => {
+            this.loadCaptcha()
+            this.$message({
+              message: '服务器错误，请稍后再试',
+              type: 'warning'
+            });
+          })
+      },
+      loadCaptcha(){
+        this.axios.get('/api/getcaptcha').then(resp => {
+            if (resp && resp.data.code === 200) {
+              this.captchaToken = resp.data.result.captchaToken
+              this.captcha = resp.data.result.imageString
+            }
+        })
       }
     }
   }
