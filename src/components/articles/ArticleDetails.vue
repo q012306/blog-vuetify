@@ -64,7 +64,14 @@
 
     <v-card style="margin: 10px">
       <v-card-text class="text--primary">
-        <v-text-field
+        <v-text-field v-if="$store.state.username"
+          solo
+          prepend-inner-icon="mdi-account"
+          label="昵称"
+          readonly
+          v-model="newcomment.commentUsername"
+          ></v-text-field>        
+        <v-text-field v-else
           solo
           clearable
           prepend-inner-icon="mdi-account"
@@ -154,6 +161,9 @@
     },
     mounted () {
       this.loadArticle();
+      if(this.$store.state.username){
+        this.newcomment.commentUsername = this.$store.state.username
+      }
     },
     methods: {
       loadArticle () {

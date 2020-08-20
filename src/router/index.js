@@ -60,6 +60,11 @@ Vue.use(VueRouter)
       component: () => import('../views/Login.vue')
     },
     {
+      path: '/register',
+      name: 'Register',
+      component: () => import('../views/register.vue')
+    },
+    {
       path: '*',
       name: 'Errorpage',
       component: () => import('../views/Errorpage.vue')

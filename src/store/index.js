@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.token,
     status: localStorage.status,
+    username: localStorage.username,
     search:'',
     article: {}
   },
@@ -16,12 +17,16 @@ export default new Vuex.Store({
       localStorage.token = result.token
       state.status = result.status
       localStorage.status = result.status
+      state.username = result.username
+      localStorage.username = result.username
     },
     clear_token(state){
-      state.token = '';
+      state.token = null;
       localStorage.removeItem("token");
-      state.status = '';
+      state.status = null;
       localStorage.removeItem("status");
+      state.username = null;
+      localStorage.removeItem("username");
     },
     updateSearchMessage (state, message) {
       state.search = message

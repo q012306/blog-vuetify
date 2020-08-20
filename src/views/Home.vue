@@ -61,6 +61,9 @@
           <v-btn color="primary" block v-if="!$store.state.token" :to="'/login'">登陆</v-btn>
         </div>
         <div class="pa-2">
+          <v-btn color="blue-grey" class="white--text" block v-if="!$store.state.token" :to="'/register'">注册</v-btn>
+        </div>
+        <div class="pa-2">
           <v-btn color="error" block v-if="$store.state.token" @click="$store.commit('clear_token')">注销</v-btn>
         </div>
       </template>
@@ -241,7 +244,7 @@ export default {
   computed: {
     activeItems: function () {
       return this.items.filter((items) => {
-        if(this.$store.state.token){
+        if(this.$store.state.status>=2){
           return items
         }
         else{

@@ -2,7 +2,7 @@
   <body id="poster">
     <v-layout row wrap  align-center justify-center fill-height >
       <v-form v-model="valid" class="login-container">
-        <h3 class="login_title">系统登录</h3>
+        <h3 class="login_title">注册</h3>
         <v-text-field
           :rules="inputrules"
           clearable
@@ -19,7 +19,30 @@
           :counter="20"
           label="密码">
         </v-text-field>
-
+        <v-text-field
+          clearable
+          type="password"
+          :rules="inputrules"
+          v-model="loginForm.confirmPassword"
+          :counter="20"
+          label="确认密码">
+        </v-text-field>
+        <v-text-field
+          clearable
+          type="text"
+          :rules="emailRules"
+          v-model="loginForm.email"
+          :counter="50"
+          label="邮箱">
+        </v-text-field>
+        <!-- <v-text-field
+          clearable
+          type="password"
+          :rules="inputrules"
+          v-model="loginForm.avatar"
+          :counter="20"
+          label="头像">
+        </v-text-field> -->
         <div class="d-flex align-center">
         <v-text-field
           :counter="4"
@@ -30,7 +53,7 @@
         ></v-text-field>
         <v-img v-ripple style="margin-left:18px;box-shadow: 3px 3px 3px #888888;cursor:pointer" :src="'data:image/jpg;base64,'+captcha" @click="loadCaptcha"></v-img>
         </div>
-        <v-btn :disabled="!valid" block color="primary" style="margin-top:10px" v-on:click="login">登录</v-btn>
+        <v-btn :disabled="!valid" block color="primary" style="margin-top:10px" v-on:click="register">注册</v-btn>
       </v-form>
     </v-layout>
   </body>
@@ -38,17 +61,25 @@
 
 <script scoped>
   export default {
-    name: 'Login',
+    name: 'Register',
     data() {
       return {
         loginForm: {
           username: '',
-          password: ''
+          password: '',
+          confirmPassword:'',
+          email: '',
+          // avatar: ''
         },
         valid: false,
         inputrules: [
           v => !!v || '不能为空！',
           v => v.length <= 20 || '必须小于20个字符！',
+        ],
+        emailRules: [
+          v => !!v || 'E-mail不能为空！',
+          v => /.+@.+\..+/.test(v) || 'E-mail必须合法！',
+          v => v.length <= 50 || '必须小于50个字符！',
         ],
         captcharules: [
           v => !!v || '不能为空！',
@@ -63,21 +94,31 @@
       this.loadCaptcha()
     },
     methods: {
-      login() {
+      register() {
+        if(this.loginForm.password != this.loginForm.confirmPassword){
+
+          this.$message({
+              message: '两次输入密码不一致！',
+              type: 'warning'
+          });
+          return;
+        }
         this.axios
-          .post('/api/login', {
-            username: this.loginForm.username,
-            password: this.loginForm.password,
+          .post('/api/register', {
+            user:{
+              username: this.loginForm.username,
+              password: this.loginForm.password,
+              email : this.loginForm.email,
+            },
             captchaText: this.captchaText,
             captchaToken: this.captchaToken
           })
           .then(successResponse => {
             if (successResponse.data.code === 200) {
               this.$message({
-                message: '登录成功！',
+                message: '注册成功，使用新注册的账号登陆吧！',
                 type: 'success'
               });
-              this.$store.commit("set_token", successResponse.data.result);
               this.$router.replace({
                 path: '/index'
               })
