@@ -216,7 +216,7 @@ export default {
       { title: '文章管理', icon: 'mdi-book-open-page-variant', route: '/admin/article-management',withoutAuth:false },
       { title: '添加文章', icon: 'mdi-book-plus', route: '/admin/article-editor',withoutAuth:false },
       { title: '外链管理', icon: 'mdi-webpack', route: '/admin/linkpagemanagement',withoutAuth:false },
-      { title: '文件管理', icon: 'mdi-file', route: '/admin/file-management',withoutAuth:true },
+      { title: '文件管理', icon: 'mdi-file', route: '/admin/file-management',withoutAuth:false },
     ],
     additems: [],
     color: 'primary',
