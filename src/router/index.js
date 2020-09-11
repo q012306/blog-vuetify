@@ -51,7 +51,11 @@ Vue.use(VueRouter)
           name: 'LinkPage',
           component: () => import('../components/LinkPages/LinkPageManagement.vue'),
         },
-        
+        {
+          path: '/admin/file-management',
+          name: 'filePage',
+          component: () => import('../components/files/fileManagement.vue'),
+        },
       ]
     },
     {

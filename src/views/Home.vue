@@ -212,10 +212,11 @@ export default {
     items: [
       { title: '文章列表', icon: 'mdi-book-open', route: '/' ,withoutAuth:true},
       { title: '小伙伴们', icon: 'mdi-account-group', route: '/friends',withoutAuth:true },
-      { title: '关于我', icon: 'mdi-card-account-details', route: '/about',withoutAuth:true },
+      { title: '关于本站', icon: 'mdi-card-account-details', route: '/about',withoutAuth:true },
       { title: '文章管理', icon: 'mdi-book-open-page-variant', route: '/admin/article-management',withoutAuth:false },
       { title: '添加文章', icon: 'mdi-book-plus', route: '/admin/article-editor',withoutAuth:false },
       { title: '外链管理', icon: 'mdi-webpack', route: '/admin/linkpagemanagement',withoutAuth:false },
+      { title: '文件管理', icon: 'mdi-file', route: '/admin/file-management',withoutAuth:true },
     ],
     additems: [],
     color: 'primary',

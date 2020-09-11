@@ -19,7 +19,7 @@
         摘要/封面
       </el-button>
     </el-row>
-    <el-row style="height: calc(100vh - 140px);">
+    <el-row style="height: calc(100vh - 300px);">
       <v-md-editor
         v-model="article.articleContentMd"
         :disabled-menus="[]"
