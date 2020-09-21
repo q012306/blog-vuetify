@@ -35,6 +35,7 @@
     },
     data () {
       return {
+        url: '',
         fileList: [],
         fileListMap : {},
         myHeaders: {Authorization: token}
@@ -62,8 +63,9 @@
       },
       handleSuccess (response,file) {
         // console.log(file)
-        this.fileListMap[file.name] = response.result.substring(response.result.lastIndexOf("/")+1);
-        console.log(this.fileListMap)
+        this.url = response.result
+        this.fileListMap[file.name] = response.result.substring(response.result.lastIndexOf("/")+1)
+        //console.log(this.fileListMap)
         this.$emit('onUpload')
         this.$message.warning('上传成功')
       },

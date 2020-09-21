@@ -9,6 +9,7 @@
       <v-hover v-slot:default="{ hover }">
         <v-card :elevation="hover ? 12 : 4" style="margin: 18px;" @click="GoToArticle(article)">
           <v-img
+            gradient="to top, rgb(192,192,192), rgba(255,0,0,0)"
             class="white--text align-end"
             :src="article.articleCover"
             height="200px"
@@ -22,7 +23,7 @@
                 {{article.articleTitle}}
               </div>
             </v-expand-transition>
-            <v-card-title style="text-shadow: 2px 2px 2px #888888; font-weight: bold" v-if="!hover">{{article.articleTitle}}</v-card-title>
+            <v-card-title style="font-weight: bold" v-if="!hover">{{article.articleTitle}}</v-card-title>
           </v-img>
           <v-card-subtitle class="pb-0">{{article.articleDate | dateformat('lll')}}</v-card-subtitle>
           <v-card-text class="text--primary">{{article.articleAbstract}}</v-card-text>
